@@ -3,39 +3,7 @@
  <head>
   <meta charset="utf-8">
   <title>Авторизация</title>
-  <style>
-  body {
-   background:snow;
-  }
-  form {
-    width:300px;
-    height:200px;
-    padding:10px;
-    margin:0 auto;
-    margin-top:30vh;
-    background:lightskyblue;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-around;
-    align-items:center;
-    border-radius:5px;
-    }
-  form input{
-    border:0;
-    font-size:x-large;
-    padding:5px;
-    height:40px;
-    margin:5px 15px;
-    width:230px;
-    border-radius:5px;
-    }
-  form input[type=submit] {
-    background:green;
-    color:white;
-    width:240px;
-    height:50px;
-  }
-    </style>
+  <link rel="stylesheet"  href="static/css/style.css" />
  </head>
  <body><form method="POST" action="/login">
    <input type="text" name="username" placeholder="Логин">

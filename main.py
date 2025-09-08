@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse, RedirectResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 import os
 import urllib.request
 import urllib.parse
@@ -7,6 +8,7 @@ import urllib.parse
 app = FastAPI()
 app.description = "Test"
 app.nd = '111'
+app.mount('/static', StaticFiles(directory='/home/alex/fastapi/static'), 'static')
 SESSION = {}
 SESSION['user'] = 'unknown'
 tpl_path = 'templates'
@@ -47,10 +49,10 @@ async def logout():
    return RedirectResponse('/')
     
 
-@app.get('/static/{name}')
-async def mainpage(name):
-    fpath = os.path.join('static',name)
-    return FileResponse(fpath)
+#@app.get('/static/css/{name}')
+#async def mainpage(name):
+#    fpath = os.path.join('static',name)
+#    return FileResponse(fpath)
 
 @app.get("/")
 async def index():
