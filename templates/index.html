@@ -1,0 +1,31 @@
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<div id="app"><h1>{{ message }}</h1>
+  <aside>
+  <ul>
+   <li v-for="item in data">
+   {{item}}
+   </li>
+  </ul>
+  </aside>
+</div>
+
+<script>
+  const { createApp, ref } = Vue
+  const url = "http://91.240.208.99:8080/cgi-bin/test1.py?op=query&sql=select%20id,date%20from%20test..pr_returns&type=json";
+/*  const getdata = async () =>  {const res = await fetch(url);
+  const ret = await res.json();
+         return res;
+       };
+  const data = await getdata();
+*/
+  const data = ["ref1","ref2","ref3"];
+  createApp({
+    setup() {
+      const message = ref('Hello vue!');
+      return {
+        message,data
+      }
+    }
+  }).mount('#app')
+</script>
