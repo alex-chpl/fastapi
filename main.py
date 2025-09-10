@@ -32,6 +32,13 @@ def remquery(url,param={}):
     return res
     pass
 
+@app.get("/")
+async def index():
+    '''Главная страница
+    '''
+    return FileResponse("templates/index.html")
+
+
 @app.get('/login')
 async def login():
     return FileResponse('templates/login.html')
@@ -54,11 +61,6 @@ async def logout():
 #    fpath = os.path.join('static',name)
 #    return FileResponse(fpath)
 
-@app.get("/")
-async def index():
-    '''Главная страница
-    '''
-    return FileResponse("templates/index.html")
 
 @app.get("/users/me")
 async def read_user_me(test="***"):
