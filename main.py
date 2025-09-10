@@ -8,7 +8,7 @@ import urllib.parse
 app = FastAPI()
 app.description = "Test"
 app.nd = '111'
-app.mount('/static', StaticFiles(directory='/home/alex/fastapi/static'), 'static')
+app.mount('/static', StaticFiles(directory='static'), 'static')
 SESSION = {}
 SESSION['user'] = 'unknown'
 tpl_path = 'templates'
