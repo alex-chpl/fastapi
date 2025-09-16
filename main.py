@@ -1,5 +1,5 @@
-from fastapi import FastAPI, Form
-from fastapi.responses import HTMLResponse, RedirectResponse, FileResponse
+from fastapi import FastAPI, Form, Header, Cookie
+from fastapi.responses import HTMLResponse, RedirectResponse, FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 import os
 import urllib.request
@@ -33,10 +33,14 @@ def remquery(url,param={}):
     pass
 
 @app.get("/")
-async def index():
+async def index(session_id: str = Cookie(default='0')):
+    
     '''Главная страница
     '''
-    return FileResponse("templates/index.html")
+    if session_id == '0':
+       return RedirectResponse('/login')
+    else:
+       return FileResponse("templates/index.html")
 
 
 @app.get('/login')
@@ -47,8 +51,9 @@ async def login():
 async def do_login(username: str = Form(min_length=3),
    password: str = Form(min_length = 6, max_length=32)):
    SESSION['user'] = username if username=='alex' else 'unknown user'
-
-   return {"username": username, "pass":password}
+   resp = JSONResponse({"username": username, "pass":password})
+   resp.set_cookie('session_id', value='1')
+   return resp
 
 @app.get('/logout')
 async def logout():
@@ -84,5 +89,6 @@ async def check_list(fdate='today',todate='today'):
 
 @app.get("/api/check")
 async def check_list_json(fdate='today',todate='today'):
-   return {"data":['point 1','point 2','point 3','point 4'],
-           "msg":"Check list "+(SESSION['fdate'] if SESSION['fdate']==SESSION['todate'] else SESSION['fdate']+' to '+SESSION['todate']) }
+   msg = "Check list "+(fdate if fdate == todate else fdate+' to '+ todate)
+   return JSONResponse({"data":['point 1','point 2','point 3','point 4'],
+           "msg":msg})
